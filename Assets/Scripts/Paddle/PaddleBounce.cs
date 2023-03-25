@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PaddleBounce : MonoBehaviour, IBounceEffect
 {
-    [SerializeField, Tooltip("Ball will bounce off paddle at an angle between (180 - Max Angle) and Max Angle.")]
-    private float _maxAngle = 45f;
+    [SerializeField, Range(15f, 80f), Tooltip("Ball will bounce off paddle at an angle between (180 - min angle) and min angle.")]
+    private float _minAngle = 45f;
 
     // Bounces the ball away at an angle that only depends on where on the paddle the ball hit. 
     // Keeps the same speed as it had on impact. 
@@ -19,7 +19,7 @@ public class PaddleBounce : MonoBehaviour, IBounceEffect
 
         // Get bounce angle based off impact position. 
         // Far right bounces off at (180 - _maxAngle) degrees, far left at _maxAngle degrees. 
-        float bounceAngle = (2 * _maxAngle - 180) * localSpaceImpactPoint.x + 90;
+        float bounceAngle = (2 * _minAngle - 180) * localSpaceImpactPoint.x + 90;
         Debug.Log($"bounceAngle: {bounceAngle}");
 
         // Make new Vector2 in the bounce angle's direction. 

@@ -1,6 +1,15 @@
 public class AAAAAAAAAA
 {/*
 	
+	FIX:
+
+	Ball not moving with paddle even though it's a child.
+
+
+
+
+
+
 	Standard brick breaker game. 
 	Keep it super simple.
 	LOTS OF JUICE!!!
@@ -13,6 +22,7 @@ public class AAAAAAAAAA
 		-Ball breaks brick and passes straight through (like glass).
 		-Ball gets caught by brick and launched straight up/down/left/right. 
 		-Balls speeds up/slows down. 
+		-Brick explodes, destroying nearby bricks and launching the ball away quickly (Set ball speed to a set high value).
 
 	Get powerups randomly from bricks. 
 	Powerup drop chance depends on level or brick or both. 

@@ -15,12 +15,12 @@ public class BrickCollisionManager : MonoBehaviour, IBounceEffect
 
         _boxCollider = GetComponent<BoxCollider2D>();
 
-        BrickHealthManager.OnBreak += () => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak += () => { Destroy(gameObject); };
     }
 
     private void OnDisable()
     {
-        BrickHealthManager.OnBreak -= () => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak -= () => { Destroy(gameObject); };
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

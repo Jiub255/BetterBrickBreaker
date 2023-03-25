@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Shoot",
+                    "name": "Action",
                     "type": "PassThrough",
                     "id": "f999653f-82a3-4f88-b029-b465b4db74f5",
                     "expectedControlType": "Button",
@@ -98,7 +98,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Shoot",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

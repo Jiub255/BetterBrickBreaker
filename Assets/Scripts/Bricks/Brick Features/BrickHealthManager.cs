@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BrickHealthManager
 {
-    public static event Action OnBreak;
+    public event Action OnBreak;
 
     [SerializeField]
     private int _maxHealth;
