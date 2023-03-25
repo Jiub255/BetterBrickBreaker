@@ -6,7 +6,12 @@ public class AAAAAAAAAA
 	Ball not moving with paddle even though it's a child.
 
 
+	TODO:
 
+	Automatically set the 4 walls, paddle, bricks, and the UI based on screen size/resolution.
+		Make sure the UI fits with the walls.
+			Have the UI take a percentage of the top/bottom? And then the walls are set to a percent of screen height as well?
+			Or just have panel-less UI below the paddle in the blank space?
 
 
 

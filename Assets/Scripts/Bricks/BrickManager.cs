@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrickCollisionManager : MonoBehaviour, IBounceEffect
+public class BrickManager : MonoBehaviour, IBounceEffect
 {
     private BrickBouncer _brickBouncer;
     private BrickHealthManager _brickHealthManager;
+
     private BoxCollider2D _boxCollider;
 
     private void OnEnable()
     {
-        _brickBouncer = new BrickBouncer();
-        _brickHealthManager = new BrickHealthManager();
-
         _boxCollider = GetComponent<BoxCollider2D>();
+
+        _brickBouncer = new BrickBouncer(transform, _boxCollider);
+        _brickHealthManager = new BrickHealthManager();
 
         _brickHealthManager.OnBreak += () => { Destroy(gameObject); };
     }
@@ -25,13 +26,16 @@ public class BrickCollisionManager : MonoBehaviour, IBounceEffect
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         _brickHealthManager.TakeDamage();
     }
 
     public Vector2 CalculateBounce(Vector2 impactVelocity, Vector2 worldSpaceImpactPoint)
     {
-        // If impact point is close to the side endpoints, reverse x velocity,
+        // Probably being silly with architecture at this point.  
+        return _brickBouncer.CalculateBounce(impactVelocity, worldSpaceImpactPoint);
+
+
+/*        // If impact point is close to the side endpoints, reverse x velocity,
         // otherwise, reverse y velocity. 
         Vector2 localSpaceImpactPoint = transform.InverseTransformPoint(worldSpaceImpactPoint);
 
@@ -51,6 +55,6 @@ public class BrickCollisionManager : MonoBehaviour, IBounceEffect
         {
             // Reverse y-velocity. 
             return new Vector2(impactVelocity.x, -impactVelocity.y);
-        }
+        }*/
     }
 }

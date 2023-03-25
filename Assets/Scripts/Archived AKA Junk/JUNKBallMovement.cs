@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class JUNKBallMovement : MonoBehaviour
 {
-	private Rigidbody2D _rb;
+/*	private Rigidbody2D _rb;
 
     // Necessary or useful to separate speed and direction?
     private Vector2 _direction;
     private float _speed;
 
-    private Vector2 _velocity;/* { get { return _speed * _direction; } }*/
+    private Vector2 _velocity;*//* { get { return _speed * _direction; } }*//*
 
     public Vector2 Velocity { get { return _velocity; } }
 
@@ -47,5 +47,5 @@ public class JUNKBallMovement : MonoBehaviour
     private void ChangeSpeed(float newSpeed)
     {
         _speed = newSpeed;
-    }
+    }*/
 }

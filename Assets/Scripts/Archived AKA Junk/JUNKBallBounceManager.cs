@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class JUNKBallBounceManager : MonoBehaviour
 {
-    // BallMovement listens for this. 
+/*    // BallMovement listens for this. 
     public static event Action<Vector2> OnChangedVelocity;
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -14,5 +14,5 @@ public class JUNKBallBounceManager : MonoBehaviour
 
         // BallMovement listens for this. 
         OnChangedVelocity?.Invoke(bounceVelocity);
-    }
+    }*/
 }

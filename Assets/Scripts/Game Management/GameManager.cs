@@ -9,17 +9,30 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int _startingLives = 3;
     private int _lives;
+    private int _score;
 
     private void OnEnable()
     {
-        _lives = _startingLives;
-
         BottomWall.OnBallFall += HandleBallFall;
+    }
+
+    private void Start()
+    {
+        InitializeGame();
     }
 
     private void OnDisable()
     {
         BottomWall.OnBallFall -= HandleBallFall;
+    }
+
+    private void InitializeGame()
+    {
+        _lives = _startingLives;
+        _score = 0;
+
+        // BallMovementManager listens, resets ball. 
+        OnResetBall?.Invoke();
     }
 
     private void HandleBallFall()

@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BallMovementManager : MonoBehaviour
+public class BallManager : MonoBehaviour
 {
 	private Rigidbody2D _rb;
 	private Vector2 _velocity;
     [SerializeField]
     private Vector2 _launchVelocity = new Vector2(1f, 2f).normalized * 10f;
 
-	private BallBouncer _ballBounceMan2;
-	private BallMover _ballMovement2;
+	private BallBouncer _ballBouncer;
+	private BallMover _ballMover;
 
     private bool _ballOnPaddle = true;
 
@@ -22,15 +22,15 @@ public class BallMovementManager : MonoBehaviour
         _ballOnPaddle = true;
         _ballHolderTransform = transform.parent;
 
-        _ballBounceMan2 = new BallBouncer();
-        _ballMovement2 = new BallMover(_rb);
+        _ballBouncer = new BallBouncer();
+        _ballMover = new BallMover(_rb);
+
+        GameManager.OnResetBall += ResetBall;
     }
 
     private void Start()
     {
         S.I.IM.PC.Gameplay.Action.performed += LaunchBall;
-
-        GameManager.OnResetBall += ResetBall;
     }
 
     private void OnDisable()
@@ -76,12 +76,12 @@ public class BallMovementManager : MonoBehaviour
     {
         if (!_ballOnPaddle)
         {
-            _ballMovement2.TickPosition(_velocity);
+            _ballMover.TickPosition(_velocity);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _velocity = _ballBounceMan2.HandleBounce(collision, _velocity);
+        _velocity = _ballBouncer.HandleBounce(collision, _velocity);
     }
 }

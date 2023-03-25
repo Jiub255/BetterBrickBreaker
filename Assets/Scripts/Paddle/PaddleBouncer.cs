@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PaddleBounce : MonoBehaviour, IBounceEffect
+public class PaddleBouncer : MonoBehaviour, IBounceEffect
 {
     [SerializeField, Range(15f, 80f), Tooltip("Ball will bounce off paddle at an angle between (180 - min angle) and min angle.")]
     private float _minAngle = 45f;
