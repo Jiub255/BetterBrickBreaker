@@ -12,11 +12,13 @@ public class HUDManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnResetBall += UpdateLives;
+        GameManager.OnChangeScore += UpdateScore;
     }
 
     private void OnDisable()
     {
         GameManager.OnResetBall -= UpdateLives;
+        GameManager.OnChangeScore -= UpdateScore;
     }
 
     private void UpdateLives(int lives)

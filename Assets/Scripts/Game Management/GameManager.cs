@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 
+// Should this class create and keep references to all the other managers?
 public class GameManager : MonoBehaviour
 {
     public static event Action OnGameOver;
     public static event Action<int> OnResetBall;
+    public static event Action<int> OnChangeScore;
 
     [SerializeField]
     private int _startingLives = 3;
@@ -14,6 +16,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         BottomWall.OnBallFall += HandleBallFall;
+        BrickManager.OnBrickBroken += UpdateScore;
     }
 
     private void Start()
@@ -24,6 +27,14 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         BottomWall.OnBallFall -= HandleBallFall;
+        BrickManager.OnBrickBroken -= UpdateScore;
+    }
+
+    private void UpdateScore(int points)
+    {
+        _score += points;
+        // HUD listens, updates score. 
+        OnChangeScore?.Invoke(_score);
     }
 
     private void InitializeGame()
@@ -31,8 +42,10 @@ public class GameManager : MonoBehaviour
         _lives = _startingLives;
         _score = 0;
 
-        // BallMovementManager listens, resets ball. UI updates lives.
+        // BallMovementManager listens, resets ball. HUD updates lives.
         OnResetBall?.Invoke(_lives);
+        // HUD listens, updates score. 
+        OnChangeScore?.Invoke(_score);
     }
 
     private void HandleBallFall()
@@ -60,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void ResetBall()
     {
-        // BallMovementManager listens, resets ball.  UI updates lives.
+        // BallMovementManager listens, resets ball. HUD updates lives.
         OnResetBall?.Invoke(_lives);
     }
 }

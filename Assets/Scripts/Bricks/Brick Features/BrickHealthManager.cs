@@ -10,12 +10,12 @@ public class BrickHealthManager
     [SerializeField]
     private int _maxHealth;
     private int _currentHealth;
-    private int _score;
+    private int _points;
 
-	public BrickHealthManager(int score)
+	public BrickHealthManager(int points)
     {
         _currentHealth = _maxHealth;
-        _score = score;
+        _points = points;
     }
 
     public void TakeDamage()
@@ -31,6 +31,6 @@ public class BrickHealthManager
     private void Break()
     {
         // BrickManager, HUD Manager listen. 
-        OnBreak?.Invoke(_score);
+        OnBreak?.Invoke(_points);
     }
 }

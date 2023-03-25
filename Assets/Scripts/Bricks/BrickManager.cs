@@ -1,30 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BrickManager : MonoBehaviour, IBounceEffect
 {
+    public static event Action<int> OnBrickBroken;
+
     private BrickBouncer _brickBouncer;
     private BrickHealthManager _brickHealthManager;
 
     private BoxCollider2D _boxCollider;
 
     [SerializeField]
-    private int _score = 1;
+    private int _points = 1;
 
     private void OnEnable()
     {
         _boxCollider = GetComponent<BoxCollider2D>();
 
         _brickBouncer = new BrickBouncer(transform, _boxCollider);
-        _brickHealthManager = new BrickHealthManager(_score);
+        _brickHealthManager = new BrickHealthManager(_points);
 
-        _brickHealthManager.OnBreak += (x) => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak += OnBreakBrick;
     }
 
     private void OnDisable()
     {
-        _brickHealthManager.OnBreak -= (x) => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak -= OnBreakBrick;
+    }
+
+    private void OnBreakBrick(int score)
+    {
+        // GameManager listens, increases score. HUD Updates. 
+        OnBrickBroken?.Invoke(score);
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

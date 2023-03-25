@@ -40,7 +40,7 @@ public class BallManager : MonoBehaviour
         GameManager.OnResetBall -= ResetBall;
     }
 
-    private void ResetBall(int lives)
+    private void ResetBall(int notUsedHere)
     {
         // Parent ball to ball holder (which is a child of the paddle). 
         transform.parent = _ballHolderTransform;
