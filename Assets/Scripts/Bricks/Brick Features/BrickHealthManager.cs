@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class BrickHealthManager
 {
-    public event Action OnBreak;
+    public event Action<int> OnBreak;
 
     [SerializeField]
     private int _maxHealth;
     private int _currentHealth;
+    private int _score;
 
-	public BrickHealthManager()
+	public BrickHealthManager(int score)
     {
         _currentHealth = _maxHealth;
+        _score = score;
     }
 
     public void TakeDamage()
@@ -28,7 +30,7 @@ public class BrickHealthManager
 
     private void Break()
     {
-        // Who listens? 
-        OnBreak?.Invoke();
+        // BrickManager, HUD Manager listen. 
+        OnBreak?.Invoke(_score);
     }
 }

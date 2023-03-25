@@ -3,13 +3,13 @@ using UnityEngine.InputSystem;
 
 public class BallManager : MonoBehaviour
 {
+	private BallBouncer _ballBouncer;
+	private BallMover _ballMover;
+
 	private Rigidbody2D _rb;
 	private Vector2 _velocity;
     [SerializeField]
     private Vector2 _launchVelocity = new Vector2(1f, 2f).normalized * 10f;
-
-	private BallBouncer _ballBouncer;
-	private BallMover _ballMover;
 
     private bool _ballOnPaddle = true;
 
@@ -40,7 +40,7 @@ public class BallManager : MonoBehaviour
         GameManager.OnResetBall -= ResetBall;
     }
 
-    private void ResetBall()
+    private void ResetBall(int lives)
     {
         // Parent ball to ball holder (which is a child of the paddle). 
         transform.parent = _ballHolderTransform;

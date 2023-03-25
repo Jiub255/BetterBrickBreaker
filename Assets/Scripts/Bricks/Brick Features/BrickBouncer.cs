@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrickBouncer : IBounceEffect
+public class BrickBouncer
 {
     private Transform _brickTransform;
     private BoxCollider2D _boxCollider;

@@ -9,19 +9,22 @@ public class BrickManager : MonoBehaviour, IBounceEffect
 
     private BoxCollider2D _boxCollider;
 
+    [SerializeField]
+    private int _score = 1;
+
     private void OnEnable()
     {
         _boxCollider = GetComponent<BoxCollider2D>();
 
         _brickBouncer = new BrickBouncer(transform, _boxCollider);
-        _brickHealthManager = new BrickHealthManager();
+        _brickHealthManager = new BrickHealthManager(_score);
 
-        _brickHealthManager.OnBreak += () => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak += (x) => { Destroy(gameObject); };
     }
 
     private void OnDisable()
     {
-        _brickHealthManager.OnBreak -= () => { Destroy(gameObject); };
+        _brickHealthManager.OnBreak -= (x) => { Destroy(gameObject); };
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

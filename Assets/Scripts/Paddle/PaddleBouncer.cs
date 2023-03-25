@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class PaddleBouncer : MonoBehaviour, IBounceEffect
+public class PaddleBouncer
 {
-    [SerializeField, Range(15f, 80f), Tooltip("Ball will bounce off paddle at an angle between (180 - min angle) and min angle.")]
-    private float _minAngle = 45f;
+    private float _minAngle;
+
+    public PaddleBouncer(float minAngle)
+    {
+        _minAngle = minAngle;
+    }
 
     // Bounces the ball away at an angle that only depends on where on the paddle the ball hit. 
     // Keeps the same speed as it had on impact. 
-    public Vector2 CalculateBounce(Vector2 impactVelocity, Vector2 worldSpaceImpactPoint)
+    public Vector2 CalculateBounce(Vector2 impactVelocity, Vector2 worldSpaceImpactPoint, Transform paddleTransform)
     {
         // Find out where the ball hit the paddle in local space (-0.5 to 0.5).
-        Vector2 localSpaceImpactPoint = transform.InverseTransformPoint(worldSpaceImpactPoint);
+        Vector2 localSpaceImpactPoint = paddleTransform.InverseTransformPoint(worldSpaceImpactPoint);
          Debug.Log($"localSpaceImpactPoint: {localSpaceImpactPoint}");
 
         // Store speed.

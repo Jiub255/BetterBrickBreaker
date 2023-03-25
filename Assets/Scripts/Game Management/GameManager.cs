@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static event Action OnGameOver;
-    public static event Action OnResetBall;
+    public static event Action<int> OnResetBall;
 
     [SerializeField]
     private int _startingLives = 3;
@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
         _lives = _startingLives;
         _score = 0;
 
-        // BallMovementManager listens, resets ball. 
-        OnResetBall?.Invoke();
+        // BallMovementManager listens, resets ball. UI updates lives.
+        OnResetBall?.Invoke(_lives);
     }
 
     private void HandleBallFall()
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void ResetBall()
     {
-        // BallMovementManager listens, resets ball. 
-        OnResetBall?.Invoke();
+        // BallMovementManager listens, resets ball.  UI updates lives.
+        OnResetBall?.Invoke(_lives);
     }
 }
