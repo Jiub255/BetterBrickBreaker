@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BrickManager : MonoBehaviour, IBounceEffect
@@ -38,16 +36,17 @@ public class BrickManager : MonoBehaviour, IBounceEffect
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        _brickHealthManager.TakeDamage();
-    }
-
     public Vector2 CalculateBounce(Vector2 impactVelocity, Vector2 worldSpaceImpactPoint)
     {
-        // Probably being silly with architecture at this point.  
-        return _brickBouncer.CalculateBounce(impactVelocity, worldSpaceImpactPoint);
+        Debug.Log($"BrickManager box collider: {_boxCollider}, extents: {_boxCollider.bounds.extents}, size: {_boxCollider.bounds.size}");
 
+        // Probably being silly with architecture at this point.  
+        Vector2 bounceVelocity = _brickBouncer.CalculateBounce(impactVelocity, worldSpaceImpactPoint);
+
+        // Do this last because it could result in the brick being destroyed. 
+        _brickHealthManager.TakeDamage();
+
+        return bounceVelocity;
 
 /*        // If impact point is close to the side endpoints, reverse x velocity,
         // otherwise, reverse y velocity. 

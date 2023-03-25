@@ -3,8 +3,10 @@ public class AAAAAAAAAA
 	
 	FIX:
 
-	Ball not moving with paddle even though it's a child.
+	Fine tune the paddle's bounce feel.
+		Make a "flat spot" in like the middle third that doesn't affect the natural bounce angle of the ball at all. 
 
+	------------------------------------------------------------------
 
 	TODO:
 
@@ -13,7 +15,7 @@ public class AAAAAAAAAA
 			Have the UI take a percentage of the top/bottom? And then the walls are set to a percent of screen height as well?
 			Or just have panel-less UI below the paddle in the blank space?
 
-
+	------------------------------------------------------------------
 
 	Standard brick breaker game. 
 	Keep it super simple.
@@ -45,6 +47,7 @@ public class AAAAAAAAAA
 			Sharper angles the further the ball hits from the center of the paddle. 
 			Brick angles will be pretty straightforward, but with a little randomness (except for special bricks). 
 		Have ball handle bounce logic, not brick/paddle. 
+		Make sure to avoid letting the ball go too sideways. Not sure how yet exactly. 
 
 
 

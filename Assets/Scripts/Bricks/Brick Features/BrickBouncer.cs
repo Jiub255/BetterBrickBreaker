@@ -21,11 +21,27 @@ public class BrickBouncer
 
         // Get side end points of collider.
         float xExtent = _boxCollider.bounds.extents.x;
+        float yExtent = _boxCollider.bounds.extents.y;
 
-        Debug.Log($"Impact x-coordinate: {localSpaceImpactPoint.x}, x-extent of collider: {xExtent}");
+        Debug.Log($"BoxCollider: {_boxCollider}");
 
+        Debug.Log($"Impact: {localSpaceImpactPoint}, extents of collider: ({xExtent}, {yExtent})");
+
+        // If collision happened on the top or bottom
+        if (localSpaceImpactPoint.y <= -yExtent - 0.25f || localSpaceImpactPoint.y >= yExtent + 0.25f)
+        {
+            // Reverse y-velocity. 
+            return new Vector2(impactVelocity.x, -impactVelocity.y);
+        }
         // If collision happened on the left or right end, 
-        if (localSpaceImpactPoint.x < -xExtent + 0.00001f || localSpaceImpactPoint.x > xExtent - 0.00001f)
+        else
+        {
+            // Reverse x-velocity.
+            return new Vector2(-impactVelocity.x, impactVelocity.y);
+        }
+
+/*        // If collision happened on the left or right end, 
+        if (localSpaceImpactPoint.x <= -xExtent - 0.25f + 0.00001f || localSpaceImpactPoint.x >= xExtent + 0.25f - 0.00001f)
         {
             // Reverse x-velocity.
             return new Vector2(-impactVelocity.x, impactVelocity.y);
@@ -35,6 +51,6 @@ public class BrickBouncer
         {
             // Reverse y-velocity. 
             return new Vector2(impactVelocity.x, -impactVelocity.y);
-        }
+        }*/
     }
 }
