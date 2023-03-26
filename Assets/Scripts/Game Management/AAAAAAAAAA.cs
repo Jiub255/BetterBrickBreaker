@@ -10,6 +10,17 @@ public class AAAAAAAAAA
 
 	TODO:
 
+	Finish setting up all the menus.
+
+	Finish save system.
+		Game state saves
+			How to save state of current level?
+			Should I even worry about this for now? 
+		High score saves
+
+	Give a bonus for completing the game. And smaller ones for completing levels.
+		That way you can still get a score if you die before the end, but if you complete the game you get a higher score. 
+
 	Automatically set the 4 walls, paddle, bricks, and the UI based on screen size/resolution.
 		Make sure the UI fits with the walls.
 			Have the UI take a percentage of the top/bottom? And then the walls are set to a percent of screen height as well?

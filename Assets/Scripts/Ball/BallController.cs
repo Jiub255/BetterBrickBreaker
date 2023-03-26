@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BallManager : MonoBehaviour
+public class BallController : MonoBehaviour
 {
 	private BallBouncer _ballBouncer;
 	private BallMover _ballMover;
@@ -26,6 +26,7 @@ public class BallManager : MonoBehaviour
         _ballMover = new BallMover(_rb);
 
         GameManager.OnResetBall += ResetBall;
+        LevelManager.OnLevelOver += ResetBall;
     }
 
     private void Start()
@@ -38,6 +39,7 @@ public class BallManager : MonoBehaviour
         S.I.IM.PC.Gameplay.Action.performed -= LaunchBall;
 
         GameManager.OnResetBall -= ResetBall;
+        LevelManager.OnLevelOver -= ResetBall;
     }
 
     private void ResetBall(int notUsedHere)

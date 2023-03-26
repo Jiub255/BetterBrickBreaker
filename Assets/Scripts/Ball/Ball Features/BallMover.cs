@@ -9,7 +9,7 @@ public class BallMover
 		_rb = rb;
     }
 
-	// Called from FixedUpdate in BallMovementManager. 
+	// Called from FixedUpdate in BallController. 
 	public void TickPosition(Vector2 velocity)
 	{
 		_rb.MovePosition(_rb.position + velocity * Time.fixedDeltaTime);

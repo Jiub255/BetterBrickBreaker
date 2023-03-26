@@ -9,6 +9,9 @@ public class S : MonoBehaviour
     public InputManager IM { get; private set; }
     public ObjectPool ObjectPool { get; private set; }
     public GameManager GameManager { get; private set; }
+    public LevelManager LevelManager { get; private set; }
+    public PauseManager PauseManager { get; private set; }
+    public DataPersistenceManager DataPersistenceManager { get; private set; }
 
     private void Awake()
     {
@@ -24,6 +27,9 @@ public class S : MonoBehaviour
         IM = GetComponentInChildren<InputManager>();
         ObjectPool = GetComponentInChildren<ObjectPool>();
         GameManager = GetComponentInChildren<GameManager>();
+        LevelManager = GetComponentInChildren<LevelManager>();
+        PauseManager = GetComponentInChildren<PauseManager>();
+        DataPersistenceManager = GetComponentInChildren<DataPersistenceManager>();
 
         DontDestroyOnLoad(gameObject);
     }

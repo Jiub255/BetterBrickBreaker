@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BrickManager : MonoBehaviour, IBounceEffect
+public class BrickController : MonoBehaviour, IBounceEffect
 {
     public static event Action<int> OnBrickBroken;
 
@@ -28,10 +28,11 @@ public class BrickManager : MonoBehaviour, IBounceEffect
         _brickHealthManager.OnBreak -= OnBreakBrick;
     }
 
-    private void OnBreakBrick(int score)
+    private void OnBreakBrick(int points)
     {
         // GameManager listens, increases score. HUD Updates. 
-        OnBrickBroken?.Invoke(score);
+        // LevelManager listens, subtracts one from brick count. 
+        OnBrickBroken?.Invoke(points);
 
         Destroy(gameObject);
     }
