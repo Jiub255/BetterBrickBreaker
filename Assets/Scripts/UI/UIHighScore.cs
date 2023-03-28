@@ -1,25 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIHighScore : MonoBehaviour
 {
-	private List<HighScore> highScores = new List<HighScore>();
+    [SerializeField]
+    private GameObject _highScoreSlotPrefab;
 
+    [SerializeField]
+    private Transform _slotsParent;
 
-}
-
-[System.Serializable]
-public struct HighScore
-{
-	private string _name;
-	private float _date;
-	private int _score;
-
-	public HighScore(string name, float date, int score)
+    private void OnEnable()
     {
-		_name = name;
-		_date = date;
-		_score = score;
+        HighScoreManager.OnHighScoreMenu += InitializeUI;
+    }
+
+    // Called by event from HighScoreManager. 
+    private void InitializeUI(List<HighScore> highScores)
+    {
+        foreach (HighScore highScore in highScores)
+        {
+            GameObject slot = Instantiate(_highScoreSlotPrefab, _slotsParent);
+            slot.GetComponent<HighScoreSlot>().InitializePanel(highScore.Name, highScore.Score);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public static event Action<int> OnResetBall;
     public static event Action<int> OnChangeScore;
     public static event Action<int, int> OnNextLevel;
+    public static event Action<int> OnHighScore;
 
     [SerializeField]
     private int _startingLives = 3;
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
         BottomWall.OnBallFall += HandleBallFall;
         BrickController.OnBrickBroken += UpdateScore;
         LevelManager.OnLevelOver += SendScoreToUI;
+        GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
+        WinToHighScoreButton.OnButtonPressed += SendHighScore;
     }
 
     private void Start()
@@ -31,6 +34,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
         BottomWall.OnBallFall -= HandleBallFall;
         BrickController.OnBrickBroken -= UpdateScore;
         LevelManager.OnLevelOver -= SendScoreToUI;
+        GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
+        WinToHighScoreButton.OnButtonPressed -= SendHighScore;
+    }
+
+    private void SendHighScore()
+    {
+        OnHighScore?.Invoke(_score);
     }
 
     private void SendScoreToUI(int level)
@@ -74,7 +84,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void GameOver()
     {
-        // Bring up Game over/high score UI, play sounds/animations, etc.
+        // Heard by UIGameOver, UIManager,
+        // TODO: high score UI, play sounds/animations, etc.
         OnGameOver?.Invoke(_score);
 
         Debug.Log("GAME OVER");

@@ -11,6 +11,7 @@ public class AAAAAAAAAA
 	TODO:
 
 	Finish setting up all the menus.
+		Put pauses where they should be. PauseManager is a singleton. 
 
 	Finish save system.
 		Game state saves
@@ -60,6 +61,10 @@ public class AAAAAAAAAA
 		Have ball handle bounce logic, not brick/paddle. 
 		Make sure to avoid letting the ball go too sideways. Not sure how yet exactly. 
 
+	Game flow:
+		Main menu -> Gameplay -> Next level canvas -> Gameplay -> Beat Game -> Win canvas -> High score canvas -> Play again OR Main menu
+							  OR
+							  -> Die -> Death canvas -> High score canvas -> Play again OR Main menu
 
 
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class HighScorePanel : MonoBehaviour
+public class HighScoreSlot : MonoBehaviour
 {
 	[SerializeField]
 	private TextMeshProUGUI _nameText;

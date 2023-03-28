@@ -12,6 +12,7 @@ public class S : MonoBehaviour
     public LevelManager LevelManager { get; private set; }
     public PauseManager PauseManager { get; private set; }
     public DataPersistenceManager DataPersistenceManager { get; private set; }
+    public HighScoreManager HighScoreManager { get; private set; }
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class S : MonoBehaviour
         LevelManager = GetComponentInChildren<LevelManager>();
         PauseManager = GetComponentInChildren<PauseManager>();
         DataPersistenceManager = GetComponentInChildren<DataPersistenceManager>();
+        HighScoreManager = GetComponentInChildren<HighScoreManager>();
 
         DontDestroyOnLoad(gameObject);
     }
