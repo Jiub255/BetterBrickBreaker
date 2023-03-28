@@ -91,6 +91,6 @@ public class UIManager : MonoBehaviour
     {
         canvas.SetActive(false);
 
-        _hudCanvas.SetActive(true)
+        _hudCanvas.SetActive(true);
     }
 }
