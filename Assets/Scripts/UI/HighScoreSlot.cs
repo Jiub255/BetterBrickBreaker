@@ -10,16 +10,10 @@ public class HighScoreSlot : MonoBehaviour
 	[SerializeField]
 	private TextMeshProUGUI _scoreText;
 
-	public void InitializePanel(string name, int score)
+	public void InitializePanel(string name, string date, int score)
     {
 		_nameText.text = name;
-		_dateText.text = TimeToDate();
+		_dateText.text = date;
 		_scoreText.text = score.ToString();
-    }
-
-	private string TimeToDate()
-    {
-		// TODO: Actually format the date into mm/dd/yy.
-		return Time.time.ToString();
     }
 }

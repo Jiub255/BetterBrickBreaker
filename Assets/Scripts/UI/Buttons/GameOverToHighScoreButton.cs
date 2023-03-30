@@ -7,7 +7,8 @@ public class GameOverToHighScoreButton : MonoBehaviour
 
 	public void GoToHighScoreMenu()
     {
-        // Heard by GameManager, UIManager, others eventually?
+        S.I.HighScoreManager.AddNewHighScore();
+        // Heard by UIManager, FieldInput, others eventually?
         OnButtonPressed?.Invoke();
     }
 }

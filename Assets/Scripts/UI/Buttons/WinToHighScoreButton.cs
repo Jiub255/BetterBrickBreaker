@@ -7,7 +7,8 @@ public class WinToHighScoreButton : MonoBehaviour
 
     public void GoToHighScore()
     {
-        // Heard by GameManager, UIManager, others eventually?
+        S.I.HighScoreManager.AddNewHighScore();
+        // Heard by UIManager, FieldInput, others eventually?
         OnButtonPressed?.Invoke();
     }
 }

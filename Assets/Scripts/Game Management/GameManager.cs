@@ -7,23 +7,25 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public static event Action<int> OnGameOver;
     public static event Action<int> OnResetBall;
     public static event Action<int> OnChangeScore;
-    public static event Action<int, int> OnNextLevel;
-    public static event Action<int> OnHighScore;
+  //  public static event Action<int, int> OnNextLevel;
+   // public static event Action<int> OnHighScore;
 
     [SerializeField]
     private int _startingLives = 3;
     private int _lives;
     private int _score;
+    private string _name;
 
     public int Score { get { return _score; } } 
+    public string Name { get { return _name; } set { _name = value; } }
 
     private void OnEnable()
     {
         BottomWall.OnBallFall += HandleBallFall;
         Brick.OnBrickBroken += UpdateScore;
         //LevelManager.OnLevelOver += SendScoreToUI;
-        GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
-        WinToHighScoreButton.OnButtonPressed += SendHighScore;
+      //  GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
+      //  WinToHighScoreButton.OnButtonPressed += SendHighScore;
         NewGameButton.OnButtonPressed += InitializeGame;
     }
 
@@ -37,12 +39,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
         BottomWall.OnBallFall -= HandleBallFall;
         Brick.OnBrickBroken -= UpdateScore;
         //LevelManager.OnLevelOver -= SendScoreToUI;
-        GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
-        WinToHighScoreButton.OnButtonPressed -= SendHighScore;
+       // GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
+       // WinToHighScoreButton.OnButtonPressed -= SendHighScore;
         NewGameButton.OnButtonPressed -= InitializeGame;
     }
 
-    private void SendHighScore()
+/*    private void SendHighScore()
     {
         OnHighScore?.Invoke(_score);
     }
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         //Debug.Log("LevelManager.OnLevelOver heard by GameManager. ");
         // UINextLevel listens. 
         OnNextLevel?.Invoke(_score, level);
-    }
+    }*/
 
     private void UpdateScore(int points)
     {
@@ -91,11 +93,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void GameOver()
     {
-        // Heard by UIManager,
+        // Heard by UIManager, LevelManager
         // TODO: high score UI, play sounds/animations, etc.
         OnGameOver?.Invoke(_score);
 
         //Debug.Log("GAME OVER");
+
+        //S.I.PauseManager.PauseGame();
     }
 
     private void ResetBall()

@@ -21,16 +21,23 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     {
         Brick.OnBrickBroken += OnBrickDestroyed;
         NextLevelButton.OnNextLevelPressed += NextLevel;
+        NewGameButton.OnButtonPressed += InitializeGame;
+        GameManager.OnGameOver += EndGame;
     }
 
     private void OnDisable()
     {
         Brick.OnBrickBroken -= OnBrickDestroyed;
         NextLevelButton.OnNextLevelPressed -= NextLevel;
+        NewGameButton.OnButtonPressed -= InitializeGame;
+        GameManager.OnGameOver -= EndGame;
     }
 
-    private void Start()
+    private void InitializeGame()
     {
+        _currentLevelIndex = 0;
+        _numberOfBricks = 0;
+
         // Hopefully stops instance reference from getting overwritten when loading. 
         if (_currentLevelInstance == null)
         {
@@ -45,7 +52,7 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         _numberOfBricks = _levelPrefabs[_currentLevelIndex].transform.childCount;
     }
 
-    private void OnBrickDestroyed(int n)
+    private void OnBrickDestroyed(int n = 0)
     {
         _numberOfBricks--;
 
@@ -68,14 +75,16 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void Win()
+    private void EndGame(int n = 0)
     {
-        //S.I.PauseManager.PauseGame();
-
-        // Destroy current level prefab.
         Destroy(_currentLevelInstance);
 
         _currentLevelIndex = 0;
+    }
+
+    private void Win()
+    {
+        EndGame();
 
         // UIManager opens win canvas. 
         OnWin?.Invoke();

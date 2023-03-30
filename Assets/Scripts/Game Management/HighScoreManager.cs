@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HighScoreManager : MonoBehaviour
 {
-    public static event Action<List<HighScore>> OnHighScoreMenu;
+    //public static event Action<List<HighScore>> OnHighScoreMenu;
 
 	private List<HighScore> _highScores = new List<HighScore>();
 
@@ -13,33 +13,46 @@ public class HighScoreManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnHighScore += AddNewHighScore;
+        //GameManager.OnHighScore += AddNewHighScore;
+      //  GameOverToHighScoreButton.OnButtonPressed += AddNewHighScore;
+      //  WinToHighScoreButton.OnButtonPressed -= AddNewHighScore;
     }
 
     private void OnDisable()
     {
-        GameManager.OnHighScore -= AddNewHighScore;
+      //  GameManager.OnHighScore -= AddNewHighScore;
+       // GameOverToHighScoreButton.OnButtonPressed += AddNewHighScore;
+       // WinToHighScoreButton.OnButtonPressed -= AddNewHighScore;
     }
 
     // Gets called after death, and after winning. 
-    private void AddNewHighScore(/*string name, */int score)
+    public void AddNewHighScore(/*string name, *//*int score*/)
     {
-        HighScore newHighScore = new HighScore("name", Time.time, score);
+        HighScore newHighScore = new HighScore(S.I.GameManager.Name, FormatDate(), S.I.GameManager.Score);
         _highScores.Add(newHighScore);
-        SetupHighScores();
+        SortHighScores();
         S.I.DataPersistenceManager.SaveHighScores();
     }
 
-    private void SetupHighScores()
+    private string FormatDate()
+    {
+        DateTime dateTime = DateTime.Now;
+
+        Debug.Log($"dateTime: {dateTime.ToString("M-dd-yy")}");
+
+        return dateTime.ToString("M-dd-yy");
+    }
+
+/*    private void SetupHighScores()
     {
         // Heard by UIHighScore. 
         OnHighScoreMenu?.Invoke(SortHighScores());
-    }
+    }*/
 
-    private List<HighScore> SortHighScores()
+    private void SortHighScores()
     {
-        List<HighScore> sortedHighScores = _highScores.OrderBy(o => o.Score).ToList();
-        return sortedHighScores;
+        List<HighScore> sortedHighScores = _highScores.OrderByDescending(o => o.Score).ToList();
+        _highScores = sortedHighScores;
     }
 
     public void LoadData(HighScoreData data)
@@ -59,10 +72,10 @@ public class HighScoreManager : MonoBehaviour
 public struct HighScore
 {
     public string Name;
-    public float Date;
+    public string Date;
     public int Score;
 
-    public HighScore(string name, float date, int score)
+    public HighScore(string name, string date, int score)
     {
         Name = name;
         Date = date;
