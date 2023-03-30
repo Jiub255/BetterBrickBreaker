@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PaddleController : MonoBehaviour, IBounceEffect
+public class Paddle : MonoBehaviour, IBounceEffect
 {
     private PaddleMovement _paddleMovement;
     private PaddleBouncer _paddleBouncer;

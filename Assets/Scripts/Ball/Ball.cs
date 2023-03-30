@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BallController : MonoBehaviour
+public class Ball : MonoBehaviour
 {
 	private BallBouncer _ballBouncer;
 	private BallMover _ballMover;
@@ -24,14 +24,14 @@ public class BallController : MonoBehaviour
 
         _ballBouncer = new BallBouncer();
         _ballMover = new BallMover(_rb);
-
-        GameManager.OnResetBall += ResetBall;
-        LevelManager.OnLevelOver += ResetBall;
     }
 
     private void Start()
     {
         S.I.IM.PC.Gameplay.Action.performed += LaunchBall;
+
+        GameManager.OnResetBall += ResetBall;
+        LevelManager.OnLevelOver += ResetBall;
     }
 
     private void OnDisable()
@@ -44,6 +44,8 @@ public class BallController : MonoBehaviour
 
     private void ResetBall(int notUsedHere)
     {
+       // Debug.Log("ResetBall called. ");
+
         // Parent ball to ball holder (which is a child of the paddle). 
         transform.parent = _ballHolderTransform;
 

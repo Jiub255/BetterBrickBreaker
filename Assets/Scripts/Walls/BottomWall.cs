@@ -7,7 +7,7 @@ public class BottomWall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<BallController>() != null)
+        if (collision.gameObject.GetComponent<Ball>() != null)
         {
             // Game Manager listens, handles life loss, then goes from there. 
             OnBallFall?.Invoke();

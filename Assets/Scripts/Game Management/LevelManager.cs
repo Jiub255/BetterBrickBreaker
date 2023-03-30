@@ -15,15 +15,17 @@ public class LevelManager : MonoBehaviour, IDataPersistence
 
 	private int _numberOfBricks;
 
+    public int CurrentLevelIndex { get { return _currentLevelIndex; } }
+
     private void OnEnable()
     {
-        BrickController.OnBrickBroken += OnBrickDestroyed;
+        Brick.OnBrickBroken += OnBrickDestroyed;
         NextLevelButton.OnNextLevelPressed += NextLevel;
     }
 
     private void OnDisable()
     {
-        BrickController.OnBrickBroken -= OnBrickDestroyed;
+        Brick.OnBrickBroken -= OnBrickDestroyed;
         NextLevelButton.OnNextLevelPressed -= NextLevel;
     }
 
@@ -46,6 +48,9 @@ public class LevelManager : MonoBehaviour, IDataPersistence
     private void OnBrickDestroyed(int n)
     {
         _numberOfBricks--;
+
+       // Debug.Log($"OnBrickDestroyed called, {_numberOfBricks} bricks left. ");
+
         if (_numberOfBricks <= 0)
         {
             _numberOfBricks = 0;
@@ -63,9 +68,22 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    private void Win()
+    {
+        //S.I.PauseManager.PauseGame();
+
+        // Destroy current level prefab.
+        Destroy(_currentLevelInstance);
+
+        _currentLevelIndex = 0;
+
+        // UIManager opens win canvas. 
+        OnWin?.Invoke();
+    }
+
     private void EndLevel()
     {
-        S.I.PauseManager.PauseGame();
+        //S.I.PauseManager.PauseGame();
 
         // GameManager sends score to UINextLevel. 
         // BallController resets ball.
@@ -85,17 +103,7 @@ public class LevelManager : MonoBehaviour, IDataPersistence
         _currentLevelInstance = Instantiate(_levelPrefabs[_currentLevelIndex]);
         CountBricks();
 
-        S.I.PauseManager.UnpauseGame();
-    }
-
-    private void Win()
-    {
-        _currentLevelIndex = 0;
-
-        S.I.PauseManager.PauseGame();
-
-        // UIManager opens win canvas. 
-        OnWin?.Invoke();
+       // S.I.PauseManager.UnpauseGame();
     }
 
     public void LoadData(GameData data)

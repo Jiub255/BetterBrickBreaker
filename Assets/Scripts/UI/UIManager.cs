@@ -3,94 +3,72 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject _gameOverCanvas;
+	private UI _mainMenu;
 	[SerializeField]
-	private GameObject _nextLevelCanvas;
+	private UI _nextLevel;
 	[SerializeField]
-	private GameObject _winCanvas;
+	private UI _win;
 	[SerializeField]
-	private GameObject _highScoreCanvas;
+	private UI _gameOver;
 	[SerializeField]
-	private GameObject _mainMenuCanvas;
+	private UI _highScore;
 
-    [SerializeField]
-    private GameObject _hudCanvas;
+	[SerializeField]
+	private HUDManager _hudManager;
 
     private void OnEnable()
     {
-        GameManager.OnGameOver += (n) => { _gameOverCanvas.SetActive(true); };
-
-        GameOverToHighScoreButton.OnButtonPressed += OpenHighScoresMenu;
-
-        GameManager.OnNextLevel += (n, m) => { _nextLevelCanvas.SetActive(true); };
-
-        NextLevelButton.OnNextLevelPressed += () => { _nextLevelCanvas.SetActive(false); };
-
-        LevelManager.OnWin += () => { _winCanvas.SetActive(true); };
-
-        WinToHighScoreButton.OnButtonPressed += OpenHighScoresMenu;
-
-        MainMenuButton.OnMainMenuPressed += () => 
-        {
-            _highScoreCanvas.SetActive(false);
-            _mainMenuCanvas.SetActive(true);
-        };
-
-        HighScoresButton.OnButtonPressed += OpenHighScoresMenu;
+        GameManager.OnGameOver += (n) => { OpenMenu(_gameOver); };
+        GameOverToHighScoreButton.OnButtonPressed += () => { OpenMenu(_highScore); };
+        LevelManager.OnLevelOver += (n) => { OpenMenu(_nextLevel); };
+        NextLevelButton.OnNextLevelPressed += CloseAllMenus;
+        LevelManager.OnWin += () => { OpenMenu(_win); };
+        WinToHighScoreButton.OnButtonPressed += () => { OpenMenu(_highScore); };
+        MainMenuButton.OnMainMenuPressed += () => { OpenMenu(_mainMenu); };
+        HighScoresButton.OnButtonPressed += () => { OpenMenu(_highScore); };
+        NewGameButton.OnButtonPressed += CloseAllMenus;
     }
 
     private void OnDisable()
     {
-        GameManager.OnGameOver -= (n) => { _gameOverCanvas.SetActive(true); };
-
-        GameOverToHighScoreButton.OnButtonPressed -= OpenHighScoresMenu;
-
-        GameManager.OnNextLevel -= (n, m) => { _nextLevelCanvas.SetActive(true); };
-
-        NextLevelButton.OnNextLevelPressed -= () => { _nextLevelCanvas.SetActive(false); };
-
-        LevelManager.OnWin -= () => { _winCanvas.SetActive(true); };
-
-        WinToHighScoreButton.OnButtonPressed -= OpenHighScoresMenu;
-
-        MainMenuButton.OnMainMenuPressed -= () =>
-        {
-            _highScoreCanvas.SetActive(false);
-            _mainMenuCanvas.SetActive(true);
-        };
-    
-        HighScoresButton.OnButtonPressed -= OpenHighScoresMenu;
+        GameManager.OnGameOver -= (n) => { OpenMenu(_gameOver); };
+        GameOverToHighScoreButton.OnButtonPressed -= () => { OpenMenu(_highScore); };
+        LevelManager.OnLevelOver -= (n) => { OpenMenu(_nextLevel); };
+        NextLevelButton.OnNextLevelPressed -= CloseAllMenus;
+        LevelManager.OnWin -= () => { OpenMenu(_win); };
+        WinToHighScoreButton.OnButtonPressed -= () => { OpenMenu(_highScore); };
+        MainMenuButton.OnMainMenuPressed -= () => { OpenMenu(_mainMenu); };
+        HighScoresButton.OnButtonPressed -= () => { OpenMenu(_highScore); };
+        NewGameButton.OnButtonPressed -= CloseAllMenus;
     }
 
-    private void OpenHighScoresMenu()
+    private void CloseAllMenus()
     {
-        _gameOverCanvas.SetActive(false);
-        _nextLevelCanvas.SetActive(false);
-        _winCanvas.SetActive(false);
-        _mainMenuCanvas.SetActive(false);
+        _gameOver.gameObject.SetActive(false);
+        _nextLevel.gameObject.SetActive(false);
+        _win.gameObject.SetActive(false);
+        _mainMenu.gameObject.SetActive(false);
+        _highScore.gameObject.SetActive(false);
 
-        _highScoreCanvas.SetActive(true);
+        _hudManager.gameObject.SetActive(true);
+
+        S.I.PauseManager.UnpauseGame();
     }
 
-    // TODO - This might not work. Need to disable HUD while in menu somehow.
-    // Maybe just add it in to each menu change individually. 
-    private void OpenMenu(GameObject canvas)
+    private void OpenMenu(UI ui)
     {
-        _gameOverCanvas.SetActive(false);
-        _nextLevelCanvas.SetActive(false);
-        _winCanvas.SetActive(false);
-        _highScoreCanvas.SetActive(false);
-        _mainMenuCanvas.SetActive(false);
+        _gameOver.gameObject.SetActive(false);
+        _nextLevel.gameObject.SetActive(false);
+        _win.gameObject.SetActive(false);
+        _highScore.gameObject.SetActive(false);
+        _mainMenu.gameObject.SetActive(false);
 
-        _hudCanvas.SetActive(false);
+        _hudManager.gameObject.SetActive(false);
 
-        canvas.SetActive(true);
-    }
+        ui.gameObject.SetActive(true);
 
-    private void CloseMenu(GameObject canvas)
-    {
-        canvas.SetActive(false);
+        ui.InitializeUI();
 
-        _hudCanvas.SetActive(true);
+        S.I.PauseManager.PauseGame();
     }
 }

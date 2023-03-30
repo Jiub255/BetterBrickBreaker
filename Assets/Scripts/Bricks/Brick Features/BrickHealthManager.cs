@@ -5,21 +5,22 @@ public class BrickHealthManager
 {
     public event Action<int> OnBreak;
 
-    [SerializeField]
-    private int _maxHealth;
     private int _currentHealth;
     private int _points;
 
-	public BrickHealthManager(int points)
+	public BrickHealthManager(int maxHealth, int points)
     {
-        _currentHealth = _maxHealth;
+        _currentHealth = maxHealth;
         _points = points;
     }
 
     public void TakeDamage()
     {
         _currentHealth -= 1;
-        if (_currentHealth < 0)
+
+       // Debug.Log($"TakeDamage called, current health now {_currentHealth}");
+
+        if (_currentHealth <= 0)
         {
             _currentHealth = 0;
             Break();

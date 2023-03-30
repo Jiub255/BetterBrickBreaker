@@ -1,37 +1,51 @@
 using UnityEngine;
 using TMPro;
 
-public class UINextLevel : MonoBehaviour
+public class UINextLevel : UI
 {
 	[SerializeField]
 	private TextMeshProUGUI _scoreText;
 	[SerializeField]
 	private TextMeshProUGUI _buttonText;
 
-    private void OnEnable()
+    public override void InitializeUI()
     {
-        GameManager.OnNextLevel += SetupUI;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnNextLevel -= SetupUI;
-    }
-
-	// Called by event from GameManager. 
-    private void SetupUI(int score, int level)
-    {
-		UpdateScore(score);
-		UpdateButtonText(level);
+		UpdateScore(S.I.GameManager.Score);
+        // +2 because one for shifting the index up to counting numbers, and one for it being the next level. 
+		UpdateButtonText(S.I.LevelManager.CurrentLevelIndex + 2);
     }
 
 	private void UpdateScore(int score)
     {
-		_scoreText.text = score.ToString();
+         Debug.Log($"UINextLevel score updated: {score}");
+        _scoreText.text = $"Score: {score}";
     }
 
 	private void UpdateButtonText(int level)
     {
-		_buttonText.text = $"Play Level {level}";
+		_buttonText.text = $"Start Level {level}";
     }
+
+   // public static event Action OnNextLevel;
+
+/*    private void Start()
+    {
+        // GameManager.OnNextLevel += SetupUI;
+        // LevelManager.OnLevelOver += SetupUI;
+        //SetupUI();
+    }
+*//*
+    private void OnDisable()
+    {
+       // GameManager.OnNextLevel -= SetupUI;
+        LevelManager.OnLevelOver -= SetupUI;
+    }*//*
+
+    private void SetupUI(*//*int score,int level *//*)
+    {
+
+
+     //   OnNextLevel?.Invoke();
+       // Debug.Log("GameManager.OnNextLevel heard by UINextLevel. ");
+    }*/
 }

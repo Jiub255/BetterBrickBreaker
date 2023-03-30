@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIHighScore : MonoBehaviour
+public class UIHighScore : UI
 {
     [SerializeField]
     private GameObject _highScoreSlotPrefab;
@@ -9,9 +8,23 @@ public class UIHighScore : MonoBehaviour
     [SerializeField]
     private Transform _slotsParent;
 
-    private void OnEnable()
+    public override void InitializeUI()
+    {
+        foreach (HighScore highScore in S.I.HighScoreManager.HighScores)
+        {
+            GameObject slot = Instantiate(_highScoreSlotPrefab, _slotsParent);
+            slot.GetComponent<HighScoreSlot>().InitializePanel(highScore.Name, highScore.Score);
+        }
+    }
+
+/*    private void OnEnable()
     {
         HighScoreManager.OnHighScoreMenu += InitializeUI;
+    }
+
+    private void OnDisable()
+    {
+        HighScoreManager.OnHighScoreMenu -= InitializeUI;
     }
 
     // Called by event from HighScoreManager. 
@@ -22,5 +35,5 @@ public class UIHighScore : MonoBehaviour
             GameObject slot = Instantiate(_highScoreSlotPrefab, _slotsParent);
             slot.GetComponent<HighScoreSlot>().InitializePanel(highScore.Name, highScore.Score);
         }
-    }
+    }*/
 }

@@ -9,6 +9,8 @@ public class HighScoreManager : MonoBehaviour
 
 	private List<HighScore> _highScores = new List<HighScore>();
 
+    public List<HighScore> HighScores { get { return _highScores; } }
+
     private void OnEnable()
     {
         GameManager.OnHighScore += AddNewHighScore;

@@ -23,9 +23,9 @@ public class BrickBouncer
         float xExtent = _boxCollider.bounds.extents.x;
         float yExtent = _boxCollider.bounds.extents.y;
 
-        Debug.Log($"BoxCollider: {_boxCollider}");
+      //  Debug.Log($"BoxCollider: {_boxCollider}");
 
-        Debug.Log($"Impact: {localSpaceImpactPoint}, extents of collider: ({xExtent}, {yExtent})");
+      //  Debug.Log($"Impact: {localSpaceImpactPoint}, extents of collider: ({xExtent}, {yExtent})");
 
         // If collision happened on the top or bottom
         if (localSpaceImpactPoint.y <= -yExtent - 0.25f || localSpaceImpactPoint.y >= yExtent + 0.25f)

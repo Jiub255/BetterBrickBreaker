@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BrickController : MonoBehaviour, IBounceEffect
+public class Brick : MonoBehaviour, IBounceEffect
 {
     public static event Action<int> OnBrickBroken;
 
@@ -10,6 +10,9 @@ public class BrickController : MonoBehaviour, IBounceEffect
 
     private BoxCollider2D _boxCollider;
 
+
+    [SerializeField]
+    private int _maxHealth = 1;
     [SerializeField]
     private int _points = 1;
 
@@ -18,7 +21,7 @@ public class BrickController : MonoBehaviour, IBounceEffect
         _boxCollider = GetComponent<BoxCollider2D>();
 
         _brickBouncer = new BrickBouncer(transform, _boxCollider);
-        _brickHealthManager = new BrickHealthManager(_points);
+        _brickHealthManager = new BrickHealthManager(_maxHealth, _points);
 
         _brickHealthManager.OnBreak += OnBreakBrick;
     }
@@ -39,7 +42,7 @@ public class BrickController : MonoBehaviour, IBounceEffect
 
     public Vector2 CalculateBounce(Vector2 impactVelocity, Vector2 worldSpaceImpactPoint)
     {
-        Debug.Log($"BrickManager box collider: {_boxCollider}, extents: {_boxCollider.bounds.extents}, size: {_boxCollider.bounds.size}");
+      //  Debug.Log($"BrickManager box collider: {_boxCollider}, extents: {_boxCollider.bounds.extents}, size: {_boxCollider.bounds.size}");
 
         // Probably being silly with architecture at this point.  
         Vector2 bounceVelocity = _brickBouncer.CalculateBounce(impactVelocity, worldSpaceImpactPoint);
