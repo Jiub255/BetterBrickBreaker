@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public static event Action<int> OnGameOver;
     public static event Action<int> OnResetBall;
     public static event Action<int> OnChangeScore;
-  //  public static event Action<int, int> OnNextLevel;
-   // public static event Action<int> OnHighScore;
 
     [SerializeField]
     private int _startingLives = 3;
@@ -16,21 +14,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private int _score;
     private string _name;
 
+    public int Lives { get { return _lives; } }
     public int Score { get { return _score; } } 
     public string Name { get { return _name; } set { _name = value; } }
 
-    private void OnEnable()
+    private void Start()
     {
         BottomWall.OnBallFall += HandleBallFall;
         Brick.OnBrickBroken += UpdateScore;
-        //LevelManager.OnLevelOver += SendScoreToUI;
-      //  GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
-      //  WinToHighScoreButton.OnButtonPressed += SendHighScore;
         NewGameButton.OnButtonPressed += InitializeGame;
-    }
+        LoadGameButton.OnButtonPressed += SetupGame;
 
-    private void Start()
-    {
         InitializeGame();
     }
 
@@ -38,23 +32,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         BottomWall.OnBallFall -= HandleBallFall;
         Brick.OnBrickBroken -= UpdateScore;
-        //LevelManager.OnLevelOver -= SendScoreToUI;
-       // GameOverToHighScoreButton.OnButtonPressed += SendHighScore;
-       // WinToHighScoreButton.OnButtonPressed -= SendHighScore;
         NewGameButton.OnButtonPressed -= InitializeGame;
+        LoadGameButton.OnButtonPressed -= SetupGame;
     }
-
-/*    private void SendHighScore()
-    {
-        OnHighScore?.Invoke(_score);
-    }
-
-    private void SendScoreToUI(int level)
-    {
-        //Debug.Log("LevelManager.OnLevelOver heard by GameManager. ");
-        // UINextLevel listens. 
-        OnNextLevel?.Invoke(_score, level);
-    }*/
 
     private void UpdateScore(int points)
     {
@@ -65,15 +45,19 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void InitializeGame()
     {
+        Debug.Log("Game initializing");
         _lives = _startingLives;
         _score = 0;
 
+        SetupGame();
+    }
+
+    private void SetupGame()
+    {
         // BallMovementManager listens, resets ball. HUD updates lives.
         OnResetBall?.Invoke(_lives);
         // HUD listens, updates score. 
         OnChangeScore?.Invoke(_score);
-
-      //  S.I.PauseManager.UnpauseGame();
     }
 
     private void HandleBallFall()
@@ -98,8 +82,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         OnGameOver?.Invoke(_score);
 
         //Debug.Log("GAME OVER");
-
-        //S.I.PauseManager.PauseGame();
     }
 
     private void ResetBall()

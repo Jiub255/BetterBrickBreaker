@@ -6,7 +6,9 @@ public class DataPersistenceManager : MonoBehaviour
 {
     [Header("File Storage Configuration")]
     [SerializeField]
-    private string _fileName;
+    private string _gameDataFileName = "data.jame";
+    [SerializeField]
+    private string _highScoreDataFileName = "highScores.jame";
 
     private FileDataHandler _fileDataHandler;
 	private GameData _gameData;
@@ -15,40 +17,32 @@ public class DataPersistenceManager : MonoBehaviour
     private HighScoreData _highScoreData;
     private HighScoreManager _highScoreManager;
 
-    private void Start()
+    private void OnEnable()
     {
-        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName);
+        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _gameDataFileName, _highScoreDataFileName);
         _dataPersistenceObjects = FindAllDataPersistenceObjects();
-        _highScoreManager = S.I.HighScoreManager;
-
-        NewGameButton.OnButtonPressed += NewGame;
-        LoadGameButton.OnButtonPressed += LoadGame;
     }
 
-    private void OnDisable()
+    private void Start()
+    {
+        _highScoreManager = S.I.HighScoreManager;
+
+        // NewGameButton.OnButtonPressed += NewGame;
+        //  LoadGameButton.OnButtonPressed += LoadGame;
+
+        // Try to load high score data. If none found, initialize with new list. 
+        LoadHighScores();
+    }
+
+/*    private void OnDisable()
     {
         NewGameButton.OnButtonPressed -= NewGame;
         LoadGameButton.OnButtonPressed -= LoadGame;
-    }
-
-    public bool LoadHighScores()
-    {
-        // Load any saved data from a file using the data handler. 
-        _highScoreData = _fileDataHandler.LoadHighScores();
-
-        return _highScoreData != null;
-    }
+    }*/
 
     public void NewGame()
     {
         _gameData = new GameData();
-
-        // Try to load high score data. If none found, initialize with new list. 
-        if (!LoadHighScores())
-        {
-            Debug.Log("No high score data was found. Initializing to defaults.");
-            _highScoreData = new HighScoreData(new List<HighScore>());
-        }
     }
 
     public void LoadGame()
@@ -59,7 +53,7 @@ public class DataPersistenceManager : MonoBehaviour
         // If no data can be loaded, initialize to a new game. 
         if (_gameData == null)
         {
-            Debug.Log("No game data was found. Initializing to defaults.");
+            Debug.Log("No game data was found. Starting new game.");
             NewGame();
         }
 
@@ -68,12 +62,23 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObject.LoadData(_gameData);
         }
+    }
 
-        // Try to load high score data. If none found, initialize with new list. 
-        if (!LoadHighScores())
+    public void LoadHighScores()
+    {
+        // Load any saved data from a file using the data handler. 
+        _highScoreData = _fileDataHandler.LoadHighScores();
+
+        // If no data found, make fresh new data. 
+        if (_highScoreData == null)
         {
             Debug.Log("No high score data was found. Initializing to defaults.");
             _highScoreData = new HighScoreData(new List<HighScore>());
+        }
+        else
+        {
+            _highScoreManager.LoadData(_highScoreData);
+            Debug.Log($"{_highScoreData.HighScores.Count} high scores in HighScoreData. ");
         }
     }
 

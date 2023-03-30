@@ -9,6 +9,7 @@ public class NewGameButton : MonoBehaviour
 
     public void NewGame()
     {
+        S.I.DataPersistenceManager.NewGame();
         // Heard by DataPersistenceManager, GameManager, UIManager, others eventually?
         OnButtonPressed?.Invoke();
     }

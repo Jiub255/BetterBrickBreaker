@@ -7,7 +7,8 @@ public class LoadGameButton : MonoBehaviour
 
     public void LoadGame()
     {
-        // Heard by DataPersistenceManager, GameManager, UIManager, others eventually?
+        S.I.DataPersistenceManager.LoadGame();
+        // Heard by GameManager, UIManager, others eventually?
         OnButtonPressed?.Invoke();
     }
 }

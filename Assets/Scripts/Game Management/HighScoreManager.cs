@@ -5,25 +5,9 @@ using UnityEngine;
 
 public class HighScoreManager : MonoBehaviour
 {
-    //public static event Action<List<HighScore>> OnHighScoreMenu;
-
 	private List<HighScore> _highScores = new List<HighScore>();
 
     public List<HighScore> HighScores { get { return _highScores; } }
-
-    private void OnEnable()
-    {
-        //GameManager.OnHighScore += AddNewHighScore;
-      //  GameOverToHighScoreButton.OnButtonPressed += AddNewHighScore;
-      //  WinToHighScoreButton.OnButtonPressed -= AddNewHighScore;
-    }
-
-    private void OnDisable()
-    {
-      //  GameManager.OnHighScore -= AddNewHighScore;
-       // GameOverToHighScoreButton.OnButtonPressed += AddNewHighScore;
-       // WinToHighScoreButton.OnButtonPressed -= AddNewHighScore;
-    }
 
     // Gets called after death, and after winning. 
     public void AddNewHighScore(/*string name, *//*int score*/)
@@ -43,12 +27,6 @@ public class HighScoreManager : MonoBehaviour
         return dateTime.ToString("M-dd-yy");
     }
 
-/*    private void SetupHighScores()
-    {
-        // Heard by UIHighScore. 
-        OnHighScoreMenu?.Invoke(SortHighScores());
-    }*/
-
     private void SortHighScores()
     {
         List<HighScore> sortedHighScores = _highScores.OrderByDescending(o => o.Score).ToList();
@@ -57,13 +35,13 @@ public class HighScoreManager : MonoBehaviour
 
     public void LoadData(HighScoreData data)
     {
-        _highScores.Clear();
+       // _highScores.Clear();
         _highScores = data.HighScores;
     }
 
     public void SaveData(ref HighScoreData data)
     {
-        data.HighScores.Clear();
+      //  data.HighScores.Clear();
         data.HighScores = _highScores;
     }
 }

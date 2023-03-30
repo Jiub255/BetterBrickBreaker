@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -7,18 +5,20 @@ using System.IO;
 public class FileDataHandler
 {
     private string _dataDirPath = "";
-    private string _dataFileName = "";
+    private string _gameDataFileName = "";
+    private string _highScoreDataFileName = "";
 
-    public FileDataHandler(string dataDirPath, string dataFileName)
+    public FileDataHandler(string dataDirPath, string gameDataFileName, string highScoreDataFileName)
     {
         _dataDirPath = dataDirPath;
-        _dataFileName = dataFileName;
+        _gameDataFileName = gameDataFileName;
+        _highScoreDataFileName = highScoreDataFileName;
     }
 
     public HighScoreData LoadHighScores()
     {
         // Use Path.Combine to account for different OS's having different path separators. 
-        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, _highScoreDataFileName);
         HighScoreData loadedData = null;
         if (File.Exists(fullPath))
         {
@@ -48,7 +48,7 @@ public class FileDataHandler
     public GameData Load()
     {
         // Use Path.Combine to account for different OS's having different path separators. 
-        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, _gameDataFileName);
         GameData loadedData = null;
         if (File.Exists(fullPath))
         {
@@ -78,7 +78,7 @@ public class FileDataHandler
     public void SaveHighScores(HighScoreData data)
     {
         // Use Path.Combine to account for different OS's having different path separators. 
-        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, _highScoreDataFileName);
         try
         {
             // Create the directory the file will be written to if it doesn't already exist. 
@@ -107,7 +107,7 @@ public class FileDataHandler
     public void Save(GameData data)
     {
         // Use Path.Combine to account for different OS's having different path separators. 
-        string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, _gameDataFileName);
         try
         {
             // Create the directory the file will be written to if it doesn't already exist. 

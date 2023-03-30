@@ -1,9 +1,14 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
 	[SerializeField]
 	private UI _mainMenu;
+	[SerializeField]
+	private UI _pauseMenu;
 	[SerializeField]
 	private UI _nextLevel;
 	[SerializeField]
@@ -16,7 +21,24 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private HUDManager _hudManager;
 
-    private void OnEnable()
+/*    private List<UI> _uis = new List<UI>();
+
+    private void Awake()
+    {
+        List<FieldInfo> fieldInfos = _mainMenu.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
+            .Where(fi => fi.FieldType == typeof(UI)).ToList();
+
+        foreach (FieldInfo fieldInfo in fieldInfos)
+        {
+            _uis.Add(fieldInfo.);
+        }
+
+        _GetType()
+            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
+            .Where(fi => fi.FieldType == typeof(UI));
+    }*/
+
+    private void Start()
     {
         GameManager.OnGameOver += (n) => { OpenMenu(_gameOver); };
         GameOverToHighScoreButton.OnButtonPressed += () => { OpenMenu(_highScore); };
@@ -27,6 +49,8 @@ public class UIManager : MonoBehaviour
         MainMenuButton.OnMainMenuPressed += () => { OpenMenu(_mainMenu); };
         HighScoresButton.OnButtonPressed += () => { OpenMenu(_highScore); };
         NewGameButton.OnButtonPressed += CloseAllMenus;
+        LoadGameButton.OnButtonPressed += CloseAllMenus;
+        S.I.IM.PC.Gameplay.Pause.performed += (c) => { OpenMenu(_pauseMenu); };
     }
 
     private void OnDisable()
@@ -40,32 +64,35 @@ public class UIManager : MonoBehaviour
         MainMenuButton.OnMainMenuPressed -= () => { OpenMenu(_mainMenu); };
         HighScoresButton.OnButtonPressed -= () => { OpenMenu(_highScore); };
         NewGameButton.OnButtonPressed -= CloseAllMenus;
+        LoadGameButton.OnButtonPressed -= CloseAllMenus;
+        S.I.IM.PC.Gameplay.Pause.performed -= (c) => { OpenMenu(_pauseMenu); };
     }
 
     private void CloseAllMenus()
     {
-        _gameOver.gameObject.SetActive(false);
-        _nextLevel.gameObject.SetActive(false);
-        _win.gameObject.SetActive(false);
-        _mainMenu.gameObject.SetActive(false);
-        _highScore.gameObject.SetActive(false);
+        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
+        _nextLevel.transform.GetChild(0).gameObject.SetActive(false);
+        _win.transform.GetChild(0).gameObject.SetActive(false);
+        _mainMenu.transform.GetChild(0).gameObject.SetActive(false);
+        _highScore.transform.GetChild(0).gameObject.SetActive(false);
 
-        _hudManager.gameObject.SetActive(true);
+        _hudManager.transform.GetChild(0).gameObject.SetActive(true);
 
         S.I.PauseManager.UnpauseGame();
     }
 
     private void OpenMenu(UI ui)
     {
-        _gameOver.gameObject.SetActive(false);
-        _nextLevel.gameObject.SetActive(false);
-        _win.gameObject.SetActive(false);
-        _highScore.gameObject.SetActive(false);
-        _mainMenu.gameObject.SetActive(false);
+        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
+        _pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
+        _nextLevel.transform.GetChild(0).gameObject.SetActive(false);
+        _win.transform.GetChild(0).gameObject.SetActive(false);
+        _highScore.transform.GetChild(0).gameObject.SetActive(false);
+        _mainMenu.transform.GetChild(0).gameObject.SetActive(false);
 
-        _hudManager.gameObject.SetActive(false);
+        _hudManager.transform.GetChild(0).gameObject.SetActive(false);
 
-        ui.gameObject.SetActive(true);
+        ui.transform.GetChild(0).gameObject.SetActive(true);
 
         ui.InitializeUI();
 
