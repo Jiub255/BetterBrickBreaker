@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -21,22 +19,17 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private HUDManager _hudManager;
 
-/*    private List<UI> _uis = new List<UI>();
+    private List<GameObject> _uiObjects = new List<GameObject>();
 
     private void Awake()
     {
-        List<FieldInfo> fieldInfos = _mainMenu.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
-            .Where(fi => fi.FieldType == typeof(UI)).ToList();
-
-        foreach (FieldInfo fieldInfo in fieldInfos)
-        {
-            _uis.Add(fieldInfo.);
-        }
-
-        _GetType()
-            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
-            .Where(fi => fi.FieldType == typeof(UI));
-    }*/
+        _uiObjects.Add(_mainMenu.transform.GetChild(0).gameObject);
+        _uiObjects.Add(_pauseMenu.transform.GetChild(0).gameObject);
+        _uiObjects.Add(_nextLevel.transform.GetChild(0).gameObject);
+        _uiObjects.Add(_win.transform.GetChild(0).gameObject);
+        _uiObjects.Add(_gameOver.transform.GetChild(0).gameObject);
+        _uiObjects.Add(_highScore.transform.GetChild(0).gameObject);
+    }
 
     private void Start()
     {
@@ -70,11 +63,17 @@ public class UIManager : MonoBehaviour
 
     private void CloseAllMenus()
     {
-        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
+/*        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
+        _pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
         _nextLevel.transform.GetChild(0).gameObject.SetActive(false);
         _win.transform.GetChild(0).gameObject.SetActive(false);
         _mainMenu.transform.GetChild(0).gameObject.SetActive(false);
-        _highScore.transform.GetChild(0).gameObject.SetActive(false);
+        _highScore.transform.GetChild(0).gameObject.SetActive(false);*/
+
+        foreach (GameObject gameObject in _uiObjects)
+        {
+            gameObject.SetActive(false);
+        }
 
         _hudManager.transform.GetChild(0).gameObject.SetActive(true);
 
@@ -83,12 +82,17 @@ public class UIManager : MonoBehaviour
 
     private void OpenMenu(UI ui)
     {
-        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
+/*        _gameOver.transform.GetChild(0).gameObject.SetActive(false);
         _pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
         _nextLevel.transform.GetChild(0).gameObject.SetActive(false);
         _win.transform.GetChild(0).gameObject.SetActive(false);
         _highScore.transform.GetChild(0).gameObject.SetActive(false);
-        _mainMenu.transform.GetChild(0).gameObject.SetActive(false);
+        _mainMenu.transform.GetChild(0).gameObject.SetActive(false);*/
+
+        foreach (GameObject gameObject in _uiObjects)
+        {
+            gameObject.SetActive(false);
+        }
 
         _hudManager.transform.GetChild(0).gameObject.SetActive(false);
 

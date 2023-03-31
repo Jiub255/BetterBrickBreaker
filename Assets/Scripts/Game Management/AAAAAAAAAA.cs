@@ -3,8 +3,11 @@ public class AAAAAAAAAA
 	
 	FIX:
 
-	Fine tune the paddle's bounce feel.
-		Make a "flat spot" in like the middle third that doesn't affect the natural bounce angle of the ball at all. 
+	Make the sides scale with screen size/resolution. 
+
+	Switch to using unity physics for bouncing/collisions. Can always just set the ball's velocity to something 
+		different if I want a special bounce effect. 
+
 
 	------------------------------------------------------------------
 
@@ -26,6 +29,14 @@ public class AAAAAAAAAA
 		Make sure the UI fits with the walls.
 			Have the UI take a percentage of the top/bottom? And then the walls are set to a percent of screen height as well?
 			Or just have panel-less UI below the paddle in the blank space?
+
+
+	------------------------------------------------------------------
+
+	EVENTUALLY MAYBE DO:
+
+	Have buttons on the walls that trigger events. Like having guns on the ceiling shoot down. Helps you by removing bricks, but can also kill you. 
+
 
 	------------------------------------------------------------------
 

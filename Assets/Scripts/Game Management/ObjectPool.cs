@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class ObjectPoolItem
 {
+    [Tooltip("Put object prefab here")]
     public GameObject objectToPool;
     public int amountToPool;
     public bool shouldExpand = true;
@@ -13,29 +12,17 @@ public class ObjectPoolItem
 
 public class ObjectPool : MonoBehaviour
 {
+    [HideInInspector]
     public List<GameObject> pooledObjects;
     public List<ObjectPoolItem> itemsToPool;
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += SceneLoaded;
+        PopulatePool();
     }
 
-    private void OnDisable()
+    private void PopulatePool()
     {
-        SceneManager.sceneLoaded -= SceneLoaded;
-    }
-
-    private void SceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        StartCoroutine(PopulatePool());
-    }
-
-    // filling old scene pool on leave scene
-    IEnumerator PopulatePool()
-    {
-        yield return new WaitForEndOfFrame();
-
         pooledObjects = new List<GameObject>();
         foreach (ObjectPoolItem item in itemsToPool)
         {
@@ -47,8 +34,6 @@ public class ObjectPool : MonoBehaviour
                 pooledObjects.Add(tmp);
             }
         }
-
-        //Debug.Log("Object Pool Populated");
     }
 
     public GameObject GetPooledObject(string tag)

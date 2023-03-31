@@ -11,12 +11,12 @@ public class Paddle : MonoBehaviour, IBounceEffect
     [SerializeField, Range(0f, 1f)]
     private float _timeToTopSpeed = 0.15f;
 
-    [SerializeField, Range(15f, 80f), Tooltip("Ball will bounce off paddle at an angle between (180 - min angle) and min angle.")]
+    [SerializeField, Range(15f, 80f), Tooltip("Ball will bounce off paddle at an angle between (min angle) and (180 - min angle).")]
     private float _minAngle = 45f;
 
     private void OnEnable()
     {
-       _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
 
         _paddleMovement = new PaddleMovement(_rb, _topSpeed, _timeToTopSpeed);
         _paddleBouncer = new PaddleBouncer(_minAngle);

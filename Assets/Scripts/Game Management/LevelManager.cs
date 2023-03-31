@@ -56,7 +56,16 @@ public class LevelManager : MonoBehaviour, IDataPersistence
 
     private void CountBricks()
     {
-        _numberOfBricks = _levelPrefabs[_currentLevelIndex].transform.childCount;
+        //_numberOfBricks = _levelPrefabs[_currentLevelIndex].transform.childCount;
+        _numberOfBricks = 0;
+
+        foreach (Transform brick in _levelPrefabs[_currentLevelIndex].transform)
+        {
+            if (!brick.GetComponent<Brick>().Indestructible)
+            {
+                _numberOfBricks++;
+            }
+        }
     }
 
     private void OnBrickDestroyed(int n = 0)

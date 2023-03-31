@@ -14,4 +14,14 @@ public class InputManager : MonoBehaviour
         PC.Disable();
         PC.Gameplay.Enable();
     }
+
+    public void EnablePauseAction()
+    {
+        PC.Gameplay.Pause.Enable();
+    }
+
+    public void DisablePauseAction()
+    {
+        PC.Gameplay.Pause.Disable();
+    }
 }
